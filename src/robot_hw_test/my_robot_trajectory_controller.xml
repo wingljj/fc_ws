@@ -1,0 +1,17 @@
+
+<library path="lib/libmove_to_start_position">
+
+<class name="franka_example_controllers/MoveToStartPosition"
+
+type="franka_example_controllers::MoveToStartPosition"
+
+base_class_type="controller_interface::ControllerBase" />
+
+
+<description>
+
+fuck test??????????
+
+</description>
+
+</library>

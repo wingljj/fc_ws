@@ -1,0 +1,8 @@
+prefix=/home/ljj/fc_ws/install
+
+Name: robot_hw_test
+Description: Description of robot_hw_test
+Version: 0.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: roscpp controller_interface kdl_parser pluginlib geometry_msgs sensor_msgs tf tf_conversions urdf realtime_tools

@@ -1,0 +1,17 @@
+<library path="lib/libMyRobotInterface">
+
+    <class name="robot_hw_test_ns/MyRobotInterface"
+
+    type="robot_hw_test_ns::MyRobotInterface"
+
+    base_class_type="hardware_interface::RobotHW">
+
+      <description>
+
+        Interface for MyRobot1
+
+      </description>
+
+    </class>
+
+  </library>

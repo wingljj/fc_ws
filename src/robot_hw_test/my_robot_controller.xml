@@ -1,0 +1,17 @@
+
+<library path="lib/libjoint_controller_test">
+
+<class name="robot_hw_test_ns/joint_controller_test"
+
+type="robot_hw_test_ns::joint_controller_test"
+
+base_class_type="controller_interface::ControllerBase" />
+
+
+<description>
+
+fuck test??????????
+
+</description>
+
+</library>

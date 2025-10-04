@@ -1,0 +1,8 @@
+prefix=/home/ljj/fc_ws/devel
+
+Name: controller_base
+Description: Description of controller_base
+Version: 0.0.0
+Cflags: -I/home/ljj/fc_ws/devel/include -I/home/ljj/fc_ws/src/controller_base/include
+Libs: -L${prefix}/lib -lcartesian_controller_base -lik_solvers
+Requires: roscpp controller_interface kdl_parser trajectory_msgs control_toolbox eigen_conversions dynamic_reconfigure pluginlib

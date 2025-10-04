@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- 导纳控制器启动文件 -->
+  
+  <!-- 参数配置 -->
+  <arg name="robot_description" default="$(find robot_hw_test)/urdf/robot.urdf"/>
+  <arg name="config_file" default="$(find robot_hw_test)/config/admittance_controller.yaml"/>
+  <arg name="controllers_file" default="$(find robot_hw_test)/config/example_controllers.yaml"/>
+  
+  <!-- 加载机器人描述 -->
+  <param name="robot_description" command="$(find xacro)/xacro $(arg robot_description)"/>
+  
+  <!-- 启动机器人状态发布器 -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+  
+  <!-- 启动控制器管理器 -->
+  <node name="controller_manager" pkg="controller_manager" type="spawner" 
+        args="joint_state_controller admittance_controller" output="screen"/>
+  
+  <!-- 加载控制器配置 -->
+  <rosparam file="$(arg config_file)" command="load"/>
+  <rosparam file="$(arg controllers_file)" command="load"/>
+  
+  <!-- 启动硬件接口节点 -->
+  <node name="hw_interface_node" pkg="robot_hw_test" type="hw_interface_node" output="screen"/>
+  
+  <!-- 启动力传感器模拟节点（用于测试） -->
+  <node name="force_sensor_simulator" pkg="robot_hw_test" type="force_sensor_simulator.py" output="screen">
+    <param name="publish_rate" value="100"/>
+    <param name="force_topic" value="/external_force"/>
+  </node>
+  
+  <!-- 启动目标位姿发布节点（用于测试） -->
+  <node name="target_pose_publisher" pkg="robot_hw_test" type="target_pose_publisher.py" output="screen">
+    <param name="publish_rate" value="10"/>
+    <param name="target_pose_topic" value="/target_pose"/>
+  </node>
+  
+  <!-- 启动RViz进行可视化 -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find robot_hw_test)/config/admittance_controller.rviz" required="false"/>
+  
+</launch>

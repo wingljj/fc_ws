@@ -1,0 +1,2 @@
+cartesian_controller_examples:controller_base:robot_hw_test
+-DCATKIN_DEVEL_PREFIX=/home/ljj/fc_ws/devel -DCMAKE_INSTALL_PREFIX=/home/ljj/fc_ws/install -G Unix Makefiles

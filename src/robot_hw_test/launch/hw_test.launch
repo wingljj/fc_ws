@@ -1,0 +1,42 @@
+<launch>
+    <arg name="rviz" default="true"/>
+    <arg name="debug" default="false"/>
+    <arg if="$(arg debug)" name="launch-prefix" value="screen -d -m gdb -command=$(env HOME)/.ros/my_debug_log --ex run --args"/>
+    <arg unless="$(arg debug)" name="launch-prefix" value=""/>
+
+    <rosparam file="$(find robot_hw_test)/config/hardware.yaml" command="load"/>
+    
+
+    <!-- 加载参数服务器 -->
+
+    <!-- <node name="hw_interface_node" pkg="robot_hw_test" type="hw_interface_node" output="screen"/> -->
+    <rosparam file="$(find robot_hw_test)/config/example_hw_config.yaml" command="load"></rosparam>
+
+    <param name="/robot_description"
+        command="$(find xacro)/xacro '$(find robot_hw_test)/urdf/robot.urdf.xacro'" />
+
+    
+    
+    <node name="sim_hardware_interface" pkg="ros_control_boilerplate" type="sim_hw_main" output="screen" launch-prefix="$(arg launch-prefix)"/>
+
+
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+                <param name="publish_frequency" type="double" value="50.0" />
+                <param name="tf_prefix" type="string" value="" />
+        </node>
+
+    <!-- Joint state publisher -->
+    <node name="joint_state_controller_spawner" pkg="controller_manager" type="spawner" args="joint_state_controller" respawn="false" output="screen"/>
+
+    <!-- Load controller configuration -->
+    <!-- 启动robothw节点 -->
+
+    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="/"
+
+        args="--stopped /mylink/joint_controller_test /mylink/my_joint_trajectory_controller_test /mylink/admittance_controller"/>
+
+    <group if="$(arg rviz)">
+                <arg name="my_rviz" value="-d $(find robot_hw_test)/etc/examples.rviz" />
+                <node name="rviz" pkg="rviz" type="rviz" respawn="false" args="$(arg my_rviz)" output="screen" />
+        </group>
+</launch>
